@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2012-2015, ARM Limited. All rights reserved.
+#  Copyright (c) 2012-2017, ARM Limited. All rights reserved.
 #  Copyright (c) 2015, Intel Corporation. All rights reserved.<BR>
 #
 #  This program and the accompanying materials
@@ -97,8 +97,8 @@ FvNameGuid         = 73dcb643-3862-4904-9076-a94af1890243
   INF ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
   INF ArmPkg/Drivers/TimerDxe/TimerDxe.inf
   INF ArmPlatformPkg/Drivers/NorFlashDxe/NorFlashDxe.inf
-  #INF ArmPlatformPkg/Drivers/LcdGraphicsOutputDxe/PL111LcdGraphicsOutputDxe.inf
-  INF ArmPlatformPkg/Drivers/LcdGraphicsOutputDxe/HdLcdGraphicsOutputDxe.inf
+
+  INF ArmPlatformPkg/Drivers/LcdGraphicsOutputDxe/LcdGraphicsOutputDxe.inf
   INF ArmPlatformPkg/Drivers/SP805WatchdogDxe/SP805WatchdogDxe.inf
 
   #

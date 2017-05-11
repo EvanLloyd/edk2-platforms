@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2012-2015, ARM Limited. All rights reserved.
+#  Copyright (c) 2012-2017, ARM Limited. All rights reserved.
 #  Copyright (c) 2015, Intel Corporation. All rights reserved.<BR>
 #
 #  This program and the accompanying materials
@@ -51,6 +51,7 @@
   ArmGicLib|ArmPkg/Drivers/ArmGic/ArmGicLib.inf
 
   LcdPlatformLib|ArmPlatformPkg/ArmVExpressPkg/Library/HdLcdArmVExpressLib/HdLcdArmVExpressLib.inf
+  LcdHwLib|ArmPlatformPkg/Drivers/HdLcd/HdLcd.inf
 
   TimerLib|ArmPkg/Library/ArmArchTimerLib/ArmArchTimerLib.inf
   ArmSmcLib|ArmPkg/Library/ArmSmcLib/ArmSmcLib.inf
@@ -236,8 +237,8 @@
 
   ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
   ArmPlatformPkg/Drivers/NorFlashDxe/NorFlashDxe.inf
-  #ArmPlatformPkg/Drivers/LcdGraphicsOutputDxe/PL111LcdGraphicsOutputDxe.inf
-  ArmPlatformPkg/Drivers/LcdGraphicsOutputDxe/HdLcdGraphicsOutputDxe.inf
+
+  ArmPlatformPkg/Drivers/LcdGraphicsOutputDxe/LcdGraphicsOutputDxe.inf
   ArmPkg/Drivers/TimerDxe/TimerDxe.inf
   ArmPlatformPkg/Drivers/SP805WatchdogDxe/SP805WatchdogDxe.inf
 
