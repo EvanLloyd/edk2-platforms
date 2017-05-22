@@ -50,6 +50,11 @@
   # SCMI Mailbox Transport Layer
   ArmMtl|Platform/ARM/JunoPkg/Library/ArmMtl/ArmMtl.inf
 
+!ifndef HEADLESS_PLATFORM
+  LcdPlatformLib|Platform/ARM/JunoPkg/Library/HdLcdArmJunoLib/HdLcdArmJunoLib.inf
+  LcdHwLib|ArmPlatformPkg/Library/HdLcd/HdLcd.inf
+!endif
+
 [LibraryClasses.common.SEC]
   PrePiLib|EmbeddedPkg/Library/PrePiLib/PrePiLib.inf
   ExtractGuidedSectionLib|EmbeddedPkg/Library/PrePiExtractGuidedSectionLib/PrePiExtractGuidedSectionLib.inf
@@ -100,7 +105,15 @@
 
   # System Memory (2GB - 16MB of Trusted DRAM at the top of the 32bit address space)
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000
+
+!ifdef HEADLESS_PLATFORM
   gArmTokenSpaceGuid.PcdSystemMemorySize|0x7F000000
+!else
+  gArmTokenSpaceGuid.PcdSystemMemorySize|0x7B000000
+  gArmPlatformTokenSpaceGuid.PcdArmLcdDdrFrameBufferBase|0xFB000000
+  gArmPlatformTokenSpaceGuid.PcdArmLcdDdrFrameBufferSize|0x04000000
+  gArmPlatformTokenSpaceGuid.PcdArmHdLcdSwapBlueRedSelect|TRUE
+!endif
 
   # Juno Dual-Cluster profile
   gArmPlatformTokenSpaceGuid.PcdCoreCount|6
@@ -141,6 +154,11 @@
   #
   gArmTokenSpaceGuid.PcdGicDistributorBase|0x2C010000
   gArmTokenSpaceGuid.PcdGicInterruptInterfaceBase|0x2C02F000
+
+!ifndef HEADLESS_PLATFORM
+  # ARM Juno HDLCD Base
+  gArmPlatformTokenSpaceGuid.PcdArmHdLcdBase|0x7FF60000
+!endif
 
   #
   # PLDA PCI Root Complex
@@ -314,6 +332,11 @@
   MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
   MdeModulePkg/Bus/Pci/NonDiscoverablePciDeviceDxe/NonDiscoverablePciDeviceDxe.inf
 
+!ifndef HEADLESS_PLATFORM
+  # Graphic Output Protocol
+  ArmPlatformPkg/Drivers/LcdGraphicsOutputDxe/LcdGraphicsOutputDxe.inf
+!endif
+
   #
   # Juno platform driver
   #
@@ -345,6 +368,12 @@
   Platform/ARM/Drivers/FdtPlatformDxe/FdtPlatformDxe.inf {
     <LibraryClasses>
       BdsLib|Platform/ARM/Library/BdsLib/BdsLib.inf
+  }
+
+  # SCMI Driver
+  ArmPlatformPkg/Drivers/ArmScmiDxe/ArmScmiDxe.inf {
+    <LibraryClasses>
+      BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
   }
 
 [Components.AARCH64]
