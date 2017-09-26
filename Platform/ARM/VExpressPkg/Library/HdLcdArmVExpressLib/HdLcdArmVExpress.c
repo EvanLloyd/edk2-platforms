@@ -46,7 +46,7 @@ typedef struct {
 
 /** The display modes supported by the platform.
 **/
-LCD_RESOLUTION mResolutions[] = {
+STATIC CONST LCD_RESOLUTION mResolutions[] = {
   { // Mode 0 : VGA : 640 x 480 x 24 bpp
     VGA, VGA_H_RES_PIXELS, VGA_V_RES_PIXELS, LCD_BITS_PER_PIXEL_24,
     VGA_OSC_FREQUENCY,
@@ -146,8 +146,8 @@ LcdPlatformInitializeDisplay (
 **/
 EFI_STATUS
 LcdPlatformGetVram (
-  OUT EFI_PHYSICAL_ADDRESS*  VramBaseAddress,
-  OUT UINTN*                 VramSize
+  OUT EFI_PHYSICAL_ADDRESS * CONST  VramBaseAddress,
+  OUT UINTN * CONST                 VramSize
   )
 {
   EFI_STATUS              Status;
@@ -215,7 +215,7 @@ LcdPlatformGetMaxMode (VOID)
 **/
 EFI_STATUS
 LcdPlatformSetMode (
-  IN UINT32                         ModeNumber
+  IN CONST UINT32                         ModeNumber
   )
 {
   EFI_STATUS            Status;
@@ -275,8 +275,8 @@ LcdPlatformSetMode (
 **/
 EFI_STATUS
 LcdPlatformQueryMode (
-  IN  UINT32                                ModeNumber,
-  OUT EFI_GRAPHICS_OUTPUT_MODE_INFORMATION  *Info
+  IN CONST UINT32                                   ModeNumber,
+  OUT EFI_GRAPHICS_OUTPUT_MODE_INFORMATION * CONST  Info
   )
 {
   if (ModeNumber >= LcdPlatformGetMaxMode ()) {
@@ -332,15 +332,15 @@ LcdPlatformQueryMode (
 **/
 EFI_STATUS
 LcdPlatformGetTimings (
-  IN  UINT32                              ModeNumber,
-  OUT UINT32*                             HRes,
-  OUT UINT32*                             HSync,
-  OUT UINT32*                             HBackPorch,
-  OUT UINT32*                             HFrontPorch,
-  OUT UINT32*                             VRes,
-  OUT UINT32*                             VSync,
-  OUT UINT32*                             VBackPorch,
-  OUT UINT32*                             VFrontPorch
+  IN  CONST UINT32                              ModeNumber,
+  OUT UINT32 * CONST                            HRes,
+  OUT UINT32 * CONST                            HSync,
+  OUT UINT32 * CONST                            HBackPorch,
+  OUT UINT32 * CONST                            HFrontPorch,
+  OUT UINT32 * CONST                            VRes,
+  OUT UINT32 * CONST                            VSync,
+  OUT UINT32 * CONST                            VBackPorch,
+  OUT UINT32 * CONST                            VFrontPorch
   )
 {
   if (ModeNumber >= LcdPlatformGetMaxMode ()) {
@@ -371,8 +371,8 @@ LcdPlatformGetTimings (
 **/
 EFI_STATUS
 LcdPlatformGetBpp (
-  IN  UINT32                              ModeNumber,
-  OUT LCD_BPP  *                          Bpp
+  IN CONST UINT32                        ModeNumber,
+  OUT LCD_BPP * CONST                    Bpp
   )
 {
   if (ModeNumber >= LcdPlatformGetMaxMode ()) {
