@@ -206,16 +206,11 @@ LcdPlatformGetVram (
   ASSERT (VramBaseAddress != NULL);
   ASSERT (VramSize != NULL);
 
-  // Is it on the motherboard or on the daughterboard?
-  switch (PL111_CLCD_SITE) {
-
-  case ARM_VE_MOTHERBOARD_SITE:
+#if (PL111_CLCD_SITE == ARM_VE_MOTHERBOARD_SITE)
     *VramBaseAddress = (EFI_PHYSICAL_ADDRESS)PL111_CLCD_VRAM_MOTHERBOARD_BASE;
     *VramSize = LCD_VRAM_SIZE;
     Status = EFI_SUCCESS;
-    break;
-
-  case ARM_VE_DAUGHTERBOARD_1_SITE:
+#elif (PL111_CLCD_SITE == ARM_VE_DAUGHTERBOARD_1_SITE)
     *VramBaseAddress = (EFI_PHYSICAL_ADDRESS)LCD_VRAM_CORE_TILE_BASE;
     *VramSize = LCD_VRAM_SIZE;
 
@@ -242,13 +237,9 @@ LcdPlatformGetVram (
       ASSERT (FALSE);
       gBS->FreePages (*VramBaseAddress, EFI_SIZE_TO_PAGES (*VramSize));
     }
-    break;
-
-  default:
-    // Unsupported site
-    Status = EFI_UNSUPPORTED;
-    break;
-  }
+#else
+#error PL111LcdVExpressLib: Unsupported PL111_CLCD_SITE
+#endif // (PL111_CLCD_SITE == ARM_VE_MOTHERBOARD_SITE)
 
   return Status;
 }
@@ -299,18 +290,15 @@ LcdPlatformSetMode (
     return EFI_INVALID_PARAMETER;
   }
 
-  switch (PL111_CLCD_SITE) {
-  case ARM_VE_MOTHERBOARD_SITE:
-    Function = SYS_CFG_OSC;
-    OscillatorId = PL111_CLCD_MOTHERBOARD_VIDEO_MODE_OSC_ID;
-    break;
-  case ARM_VE_DAUGHTERBOARD_1_SITE:
-    Function = SYS_CFG_OSC_SITE1;
-    OscillatorId = FixedPcdGet32 (PcdPL111LcdVideoModeOscId);
-    break;
-  default:
-    return EFI_UNSUPPORTED;
-  }
+#if (PL111_CLCD_SITE == ARM_VE_MOTHERBOARD_SITE)
+  Function = SYS_CFG_OSC;
+  OscillatorId = PL111_CLCD_MOTHERBOARD_VIDEO_MODE_OSC_ID;
+#elif (PL111_CLCD_SITE == ARM_VE_DAUGHTERBOARD_1_SITE)
+  Function = SYS_CFG_OSC_SITE1;
+  OscillatorId = FixedPcdGet32 (PcdPL111LcdVideoModeOscId);
+#else
+#error PL111LcdVExpressLib: Unsupported PL111_CLCD_SITE
+#endif // (PL111_CLCD_SITE == ARM_VE_MOTHERBOARD_SITE)
 
   // Set the video mode oscillator
   Status = ArmPlatformSysConfigSetDevice (
