@@ -1,6 +1,6 @@
 /** @file
 *
-*  Copyright (c) 2013-2015, ARM Limited. All rights reserved.
+*  Copyright (c) 2013-2017, ARM Limited. All rights reserved.
 *
 *  This program and the accompanying materials
 *  are licensed and made available under the terms and conditions of the BSD License
@@ -111,7 +111,9 @@ ArmPlatformGetVirtualMemoryMap (
   VirtualMemoryTable[++Index].PhysicalBase  = ARM_JUNO_NON_SECURE_SRAM_BASE;
   VirtualMemoryTable[Index].VirtualBase     = ARM_JUNO_NON_SECURE_SRAM_BASE;
   VirtualMemoryTable[Index].Length          = ARM_JUNO_NON_SECURE_SRAM_SZ;
-  VirtualMemoryTable[Index].Attributes      = CacheAttributes;
+  // This memory is shared between the application processor
+  // and the SCP. To avoid coherency problems, map it as device memory.
+  VirtualMemoryTable[Index].Attributes      = ARM_MEMORY_REGION_ATTRIBUTE_DEVICE;
 
   // PCI Root Complex
   VirtualMemoryTable[++Index].PhysicalBase  = PcdGet64 (PcdPcieControlBaseAddress);
