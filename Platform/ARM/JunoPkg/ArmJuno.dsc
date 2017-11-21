@@ -47,6 +47,9 @@
   # USB Requirements
   UefiUsbLib|MdePkg/Library/UefiUsbLib/UefiUsbLib.inf
 
+  # SCMI Mailbox Transport Layer
+  ArmMtl|Platform/ARM/JunoPkg/Library/ArmMtl/ArmMtl.inf
+
 [LibraryClasses.common.SEC]
   PrePiLib|EmbeddedPkg/Library/PrePiLib/PrePiLib.inf
   ExtractGuidedSectionLib|EmbeddedPkg/Library/PrePiExtractGuidedSectionLib/PrePiExtractGuidedSectionLib.inf
